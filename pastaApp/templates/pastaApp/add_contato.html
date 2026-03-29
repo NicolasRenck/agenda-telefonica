@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agenda — Novo Contato</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0e11;
+      --surface: #1a1820;
+      --accent: #c8a96e;
+      --accent2: #9b6fff;
+      --text: #ede9e3;
+      --muted: #7a7585;
+      --radius: 14px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* Decorative glow */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(155,111,255,0.08) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid #2e2a38;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      margin-bottom: 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 1.2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    .card-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.9rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .card-header p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 0.4rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      background: #0f0e11;
+      border: 1px solid #2e2a38;
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,169,110,0.1);
+    }
+
+    input::placeholder { color: var(--muted); }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--accent);
+      color: #0f0e11;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { background: #dbbe88; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .divider {
+      height: 1px;
+      background: #2e2a38;
+      margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <a href="{% url 'agenda' %}" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Voltar à agenda
+      </a>
+      <h2>Novo<br/>Contato</h2>
+      <p>Preencha os dados do contato abaixo.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="id_contato">Nome</label>
+        <input type="text" name="contato" id="id_contato" placeholder="Ex: Maria Silva" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="id_numero">Número</label>
+        <input type="tel" name="numero" id="id_numero" placeholder="Ex: (51) 9 9999-9999" required/>
+      </div>
+
+      <button type="submit" class="btn-submit">Salvar contato</button>
+    </form>
+  </div>
+</body>
+</html>
