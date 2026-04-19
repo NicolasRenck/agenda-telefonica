@@ -6,7 +6,11 @@ import sys
 
 def main():
     """Run administrative tasks."""
+<<<<<<< HEAD
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'agendaSub.pastaProj.settings')
+=======
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pastaProj.settings')
+>>>>>>> 680ed06cdfd265af9338d5cb6104bca5459e33c4
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -19,4 +23,8 @@ def main():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     main()
+=======
+    main()
+>>>>>>> 680ed06cdfd265af9338d5cb6104bca5459e33c4

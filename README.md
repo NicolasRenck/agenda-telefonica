@@ -17,7 +17,7 @@ Cada usuário acessa e gerencia apenas os seus próprios contatos.
 - HTML5 + CSS3
 - SQLite
 - Django Contrib Auth
-- Containerização: Docker + Docker Compose para ambiente de desenvolvimento reproduzível.
+- Docker + Docker Compose para ambiente de desenvolvimento reproduzível.
 
 
 
